@@ -1,0 +1,217 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	{% block head %}
+		{% if page_title is defined %}
+			<title>uFundy - {{page_title}}</title>
+		{% else %}
+			<title>uFundy - The Online Crowd Funding Portal</title>
+		{% endif %}
+		{% if page_description is defined %}
+			<meta name="description" content="{{page_description}}">
+		{% else %}
+			<meta name="description" content="uFundy - The Start-Up Company CrowdFunding Portal">
+		{% endif %}
+	{% endblock %}
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<meta property="og:title" content="The Start-Up Company CrowdFunding Portal" />
+	<meta property="og:type" content="activity" />
+	<meta property="og:url" content="http://www.uFundy.com" />
+	<meta property="og:image" content="" />
+	<meta property="og:site_name" content="uFundy" />
+
+	<link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+	{% block above_header %}
+	<section id='above-header-section'>
+		<article id='message_box_wrapper'>
+				{% block message_box %}
+						{% for message in messages %}
+								<div class='message_class_{{message[1]}}'>{{message[0]}}</div>
+						{% endfor %}
+				{% endblock %}
+		</article>
+	</section>
+	{% endblock %}
+
+	<section id='header-section'>
+		<div class='section_container'>
+		<section id='header_section'>
+			<div id='market_note_section'>
+			{%if is_dev%}
+				<div style="float:left; color:green; font-weight:bold">DEV</div>
+			{% else %}
+				Market Closed
+			{%endif%}
+			</div>
+			<div id='mini_site_message'>
+			</div>
+			<div id='social_counters_section'>
+			</div>
+		</section>
+		</div>
+	</section>
+
+	<section id='masthead-section'>
+		<div class="section_container">
+			<div class='column_container'>
+				{% block header %}
+				<div class='block15'>
+					<article id='logo_and_slogan_wrapper'>
+						<a href='/'>
+							<div id='logo_section'>
+								<span class='logo1'>u</span><span class='logo2'>Fund</span><span class='logo1'>y</span><span class='version'>alpha</span>
+							</div>
+						</a>
+						<div id='slogan_section'>
+							<span class='slogan'>the online crowdfunding portal</span>
+						</div>
+					</article>
+				</div>
+
+				<div class='block9'>
+					<nav>
+					</nav>
+				</div>
+				{% endblock %}
+			</div>
+		</div>
+	</section>
+
+	<section id='below-header-section'>
+		<div class="section_container">
+			<div class='column_container'>
+				{% block below_header %}
+				{% endblock %}
+			</div>
+		</div>
+	</section>
+
+	<section id='main-content-section'>
+		<div class="section_container">
+			{% block full_page %}
+
+				<div class='column_container'>
+					<div class='block21'>
+						<div class='inner_column_container'>
+							<div class='block15'>
+								{% block page_nav %}
+									{% if user is defined %}
+										{% if user == None %}
+											<nav id="nav_buttons_wrapper">
+												<a href="/market_floor" class="button">Market Floor</a>
+												{% block section_menu %}
+													<a href="/info/what_is_worddef" class="button_left">What is uFundy?</a>
+													<a href="/info/how_it_works" class="button_middle">How it Works</a>
+													<a href="/info/about_trading" class="button_middle">About Trading</a>
+													<a href="/info/about_currency" class="button_right">About Backer Points (BP)</a>
+												{% endblock %}
+												<a href="#" class="button">Tell Friend</a>
+											</nav>
+										{% endif %}
+									{% endif %}
+								{% endblock %}
+								{% block page_title %}
+								<hgroup id='page_title_wrapper'>
+									<header id='page_title'>
+										{% if page_title is defined %}
+											<span>{{page_title}}</span>
+										{% endif %}
+									</header>
+								</hgroup>
+								{% endblock %}
+
+								{% block main_content %}{% endblock %}
+							</div>
+
+							<div class='block6'>
+								{% block login_links %}
+									<article id='account_links' class='login_modue_class'>
+										{% if user %}
+											<div class='logged_in_user_widget'>
+												<div class='trader_info_wrapper'>
+												</div>
+												<div id='signout_link'>
+													<a href="{{logout_url}}" class='button'>
+														Log Out
+													</a>
+												</div>
+											</div>
+										{% else %}
+											<div id='login_links'>
+												{% block login_button %}
+													<a href="{{login_url}}" class='button_left w_100 ta_center'>
+														Log In
+													</a>
+												{% endblock %}
+												<a href="{{register_url}}" class='button_right w_100 ta_center'>
+													Register
+												</a>
+											</div>
+										{% endif %}
+									</article>
+								{% endblock %}
+								{% block right_column %}
+									{% if user %}
+										{% if account %}
+											{% include 'sidebars/trader_sidebar.html' %}
+										{% else %}
+											{% include 'sidebars/user_sidebar.html' %}
+										{% endif %}
+									{% else %}
+										{% include 'sidebars/no_user_sidebar.html' %}
+									{% endif %}
+								{% endblock %}
+							</div>
+						</div>
+					</div>
+
+					<div class='block3'>
+						<aside id='streaming_column_section'>
+							Search Box Goes Here
+						</aisde>
+						<aside id='streaming_column_section'>
+							<div id='streaming_list'>
+								Streaming Panel
+							</div>
+						</aside>
+					</div>
+				</div>
+			{% endblock %}
+		</div>
+	</section>
+
+	<footer>
+		<div id='above-footer-section'>
+			<div class="section_container">
+				{% block above_footer %}{% endblock %}
+			</div>
+		</div>
+		<div id='footer-section'>
+			<div class="section_container">
+				{% block footer %}
+				{% endblock %}
+			</div>
+		</div>
+		<div id='below-footer-section'>
+			<div class="section_container">
+				{% block below_footer %}{% endblock %}
+			</div>
+		</div>
+	</footer>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+
+{% block scripts %}
+{% endblock %}
+
+</body>
+</html>
